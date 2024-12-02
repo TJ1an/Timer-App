@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import './App.css'
-import {Timer, Buttons} from './components'
+import {Timer} from './components'
 
 function App() {
 

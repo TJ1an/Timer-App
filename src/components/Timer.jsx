@@ -7,6 +7,10 @@ const Timer = () => {
   const [seconds, setSeconds] = useState(0);
   const [isRunning, setIsRunning] = useState(false);
   const [activity, setActivity] = useState(null);
+  const [totalTimes, setTotalTimes] = useState(() => {
+    const saved = localStorage.getItem("totalTimes");
+    return saved ? JSON.parse(saved) : {};
+  });
 
   useEffect(() => {
     let timer;
@@ -18,21 +22,47 @@ const Timer = () => {
     return () => clearInterval(timer);
   }, [isRunning]);
 
-  const handleStart = () => setIsRunning(true);
-  const handleStop = () => setIsRunning(false);
+  useEffect(() => {
+    localStorage.setItem("totalTimes", JSON.stringify(totalTimes));
+  }, [totalTimes]);
+
+  const handleStart = () => {
+    if (activity === null) { 
+    }
+    else{
+      setIsRunning(true);
+    }
+  }
+
+  const handleStop = () => {
+    setIsRunning(false);
+    if (activity) {
+      setTotalTimes((prev) => ({
+        ...prev,
+        [activity]: (prev[activity] || 0) + seconds,
+      }));
+    }
+  };
 
   const handleReset = () => {
     setIsRunning(false);
     setSeconds(0);
     setActivity(null);
+    localStorage.clear();
+    setTotalTimes({});
   };
 
- const handleActivityChange = (activity) => {
-  console.log("Selected Activity:", activity);
-  handleReset(); 
-  setActivity(activity);
-  setIsRunning(true);
-};
+  const handleActivityChange = (newActivity) => {
+    if (activity) {
+      setTotalTimes((prev) => ({
+        ...prev,
+        [activity]: (prev[activity] || 0) + seconds,
+      }));
+    }
+    setActivity(newActivity);
+    setSeconds(0);
+    setIsRunning(true);
+  };
   const formatTime = (seconds) => {
     const mins = Math.floor(seconds / 60);
     const secs = seconds % 60;
@@ -41,13 +71,17 @@ const Timer = () => {
   return (
     <>
      <div className="timer-container">
-      <div className="text">
+      <div className="activity-text">
         <p>Activity: {activity}</p>
+      </div>
+      <div className="timer-text">
         <p>{formatTime(seconds)}</p>
       </div>
     </div>
     <Buttons
         onStop={handleStop}
+        onStart={handleStart}
+        onReset={handleReset}
         onSelectActivity={handleActivityChange}
       />
     </>

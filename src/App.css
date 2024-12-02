@@ -19,6 +19,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
   max-width: 50%; 
   max-height: 40%;
   min-width: 300px; 
@@ -28,22 +29,43 @@
   border: 2px solid black;
 }
 
-.text {
+.activity-text {
   display: flex;
   justify-content: center;
   align-items: center;
   text-align: center;
-  font-size: 1.2rem; 
+  font-size: 1.5rem; 
 }
 
-.buttons-container {
+.activity-buttons-container {
+  padding-top: 20px;
+  padding-bottom: 20px;
   margin-top: 20px;
   width: 50%;
   display: flex;
   flex-wrap: wrap; 
   align-items: center;
-  justify-content: center; 
+  justify-content: center;
+  border-radius: 10px;
+  border: 2px solid black;
   gap: 10px; 
+}
+
+.action-buttons-container {
+  padding-top: 5px;
+  padding-bottom: 5px;
+  margin-top: 20px;
+  width: 50%;
+  display: flex;
+  flex-wrap: wrap; 
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  gap: 10px; 
+}
+
+.timer-text{
+  font-size: 5rem;
 }
 
 button {
@@ -58,7 +80,11 @@ button {
   background-color: red;
 }
 
-#graph-button {
+#start-button {
+  background-color: green;
+}
+
+#reset-button {
   background-color: yellow;
 }
 
