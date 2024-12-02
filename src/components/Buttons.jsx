@@ -14,6 +14,7 @@ const Buttons = ({ onStop, onStart, onReset, onSelectActivity }) => {
       <button value="Java" onClick={handleButtonClick}>Java</button>
       <button value="C++" onClick={handleButtonClick}>C++</button>
       <button value="Python" onClick={handleButtonClick}>Python</button>
+      <button value="Go" onClick={handleButtonClick}>Go</button>
     </div>
     <div className = "action-buttons-container">
       <button id="stop-button" onClick={onStop}>Stop</button>
