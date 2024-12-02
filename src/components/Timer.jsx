@@ -35,7 +35,7 @@ const Timer = () => {
     else{
       setTotalTimes((prev) => ({
         ...prev,
-        [activity]: seconds,
+        [activity]: (seconds || 0),
       }));
     }
   }
@@ -49,7 +49,7 @@ const Timer = () => {
     else{
       setTotalTimes((prev) => ({
         ...prev,
-        [activity]: seconds,
+        [activity]: (seconds || 0),
       }));
     }
   };
@@ -68,9 +68,15 @@ const Timer = () => {
   };
 
   const handleActivityChange = (newActivity) => {
-    handleStart();
+    setIsRunning(false);
+    if (activity) {
+      setTotalTimes((prev) => ({
+        ...prev,
+        [activity]: (prev[activity] || 0) + seconds,
+      }));
+    }
     setActivity(newActivity);
-    handleReset();
+    setSeconds(0);
   };
 
   const formatTime = (seconds) => {
