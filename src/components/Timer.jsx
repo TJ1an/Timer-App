@@ -27,10 +27,22 @@ const Timer = () => {
   }, [totalTimes]);
 
   const handleStart = () => {
+    handleReset();
     if (!activity) return;
     setIsRunning(true);
-    if (totalTimes[activity]) {
-      totalTimes[activity] = seconds - totalTimes[activity];
+    if (totalTimes[activity] && seconds > totalTimes[activity]) {
+      const totalTimes1 = seconds - totalTimes[activity];
+      setTotalTimes((prev) => ({
+        ...prev,
+        [activity]: totalTimes1,
+      }))
+    }
+    else if (totalTimes[activity] && seconds <= totalTimes[activity]) {
+      const totalTimes2 = totalTimes[activity] + seconds;
+      setTotalTimes((prev) => ({
+        ...prev,
+        [activity]: totalTimes2,
+      }))
     }
     else{
       setTotalTimes((prev) => ({
@@ -41,10 +53,22 @@ const Timer = () => {
   }
 
   const handleStop = () => {
+    handleReset();
     if (!activity) return;
     setIsRunning(false);
-    if (totalTimes[activity]) {
-      totalTimes[activity] = seconds - totalTimes[activity];
+    if (totalTimes[activity] && seconds > totalTimes[activity]) {
+      const totalTimes3 = seconds - totalTimes[activity];
+      setTotalTimes((prev) => ({
+        ...prev,
+        [activity]: totalTimes3,
+      }))
+    }
+    else if (totalTimes[activity] && seconds <= totalTimes[activity]) {
+      const totalTimes4 = totalTimes[activity] + seconds;
+      setTotalTimes((prev) => ({
+        ...prev,
+        [activity]: totalTimes4,
+      }))
     }
     else{
       setTotalTimes((prev) => ({
@@ -68,15 +92,8 @@ const Timer = () => {
   };
 
   const handleActivityChange = (newActivity) => {
-    setIsRunning(false);
-    if (activity) {
-      setTotalTimes((prev) => ({
-        ...prev,
-        [activity]: (prev[activity] || 0) + seconds,
-      }));
-    }
+    handleReset();  
     setActivity(newActivity);
-    setSeconds(0);
   };
 
   const formatTime = (seconds) => {
