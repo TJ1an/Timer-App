@@ -1,10 +1,16 @@
 import React from "react";
 import "../App.css";
+import { useNavigate } from "react-router-dom";
 
 const Buttons = ({ onStop, onStart, onReset, onSelectActivity }) => {
+  const navigate = useNavigate();
   const handleButtonClick = (event) => {
     const activity = event.target.value; 
     onSelectActivity(activity); 
+  };
+  const handleGraphClick = (event) => {
+    handleButtonClick(event);
+    navigate('/chart');
   };
 
   return (
@@ -20,7 +26,7 @@ const Buttons = ({ onStop, onStart, onReset, onSelectActivity }) => {
       <button id="stop-button" onClick={onStop}>Stop</button>
       <button id="start-button" onClick = {onStart}>Start</button>
       <button id="reset-button" onClick = {onReset}>Reset</button>
-      <button>Graph</button>
+      <button onClick ={handleGraphClick}>Graph</button>
     </div>
     </>
   );
