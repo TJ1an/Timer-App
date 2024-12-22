@@ -30,7 +30,14 @@ const Timer = () => {
     handleReset();
     if (!activity) return;
     setIsRunning(true);
-    if (totalTimes[activity]) {
+    if (totalTimes[activity] && seconds > totalTimes[activity]) {
+      const totalTimes1 = seconds - totalTimes[activity];
+      setTotalTimes((prev) => ({
+        ...prev,
+        [activity]: totalTimes1,
+      }))
+    }
+    else if (totalTimes[activity] && seconds <= totalTimes[activity]) {
       const totalTimes2 = totalTimes[activity] + seconds;
       setTotalTimes((prev) => ({
         ...prev,
@@ -40,21 +47,34 @@ const Timer = () => {
     else{
       setTotalTimes((prev) => ({
         ...prev,
-        [activity]: 0,
+        [activity]: (seconds || 0),
       }));
     }
   }
 
-  const handleStop = () => {
+  const handleSave = () => {
     handleReset();
     if (!activity) return;
     setIsRunning(false);
-    if (totalTimes[activity]) {
-      const totalTimes1 = totalTimes[activity] + seconds;
+    if (totalTimes[activity] && seconds > totalTimes[activity]) {
+      const totalTimes3 = seconds - totalTimes[activity];
       setTotalTimes((prev) => ({
         ...prev,
-        [activity]: totalTimes1,
+        [activity]: totalTimes3,
       }))
+    }
+    else if (totalTimes[activity] && seconds <= totalTimes[activity]) {
+      const totalTimes4 = totalTimes[activity] + seconds;
+      setTotalTimes((prev) => ({
+        ...prev,
+        [activity]: totalTimes4,
+      }))
+    }
+    else{
+      setTotalTimes((prev) => ({
+        ...prev,
+        [activity]: (seconds || 0),
+      }));
     }
   };
 
@@ -94,7 +114,7 @@ const Timer = () => {
       </div>
     </div>
     <Buttons
-        onStop={handleStop}
+        onSave={handleSave}
         onStart={handleStart}
         onReset={handleHardReset}
         onSelectActivity={handleActivityChange}
